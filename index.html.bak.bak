@@ -110,12 +110,12 @@
                         </svg>
                         LinkedIn
                      </a>
-                     <a class="anim-delay-1700 text-white bg-blue-500 border-blue-500 hover:bg-blue-600 hover:border-blue-700 ring-blue-500 scale-in-center px-3 py-2 rounded inline-block items-center m-1 text-2xl md:text-3xl border focus:ring ring-opacity-50 transition" target="_blank" rel="noreferrer" href=" https://in.linkedin.com/in/tarun519">
+                     <button class="anim-delay-1700 text-white bg-blue-500 border-blue-500 hover:bg-blue-600 hover:border-blue-700 ring-blue-500 scale-in-center px-3 py-2 rounded inline-block items-center m-1 text-2xl md:text-3xl border focus:ring ring-opacity-50 transition">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewbox="0 0 16 16" class="inline" style="width:1em;height:1em;vertical-align:-0.14em">
                            <path fill-rule="evenodd" d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383l-4.758 2.855L15 11.114v-5.73zm-.034 6.878L9.271 8.82 8 9.583 6.728 8.82l-5.694 3.44A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.739zM1 11.114l4.758-2.876L1 5.383v5.73z"></path>
                         </svg>
                         Email
-                     </a>
+                     </button>
                   </div>
                </div>
             </div>
