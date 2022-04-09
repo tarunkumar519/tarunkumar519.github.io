@@ -15,8 +15,21 @@
 <link rel="icon" type="image/png" href="img/favicon.png" />
 <link rel="apple-touch-icon" href="img/apple-touch-icon.png" />
 <link rel="stylesheet" type="text/css" media="screen" href="css/styles.css" />
+<style>
+  @media (prefers-color-scheme: dark) {
+  body {
+    background: #000000;
+  }
+  h1, .tsummary {
+    color: #eeeeee;
+  }
+}
+</style>
 <body>
   <div class="messages"></div>
+  <script>
+    console.log(window.matchMedia("(prefers-color-scheme: dark)").matches);
+  </script>
   <script src="js/anime.js"></script>
   <script src="js/scripts.js"></script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-RMFTETF0VE"></script>
