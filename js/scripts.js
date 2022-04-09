@@ -1,8 +1,3 @@
-/*
- * This work is licensed under the Creative Commons Attribution-NonCommercial 4.0 International License. 
- * To view a copy of this license, visit http://creativecommons.org/licenses/by-nc/4.0/.
- * Copyright (c) 2016 Julian Garnier
- */
 
 window.onload = function() {
 
@@ -23,12 +18,12 @@ window.onload = function() {
 
   var messages = [
     'Hey there 👋',
-    'I\'m Julian',
-    'I design and code things on the web',
-    'I\'m currently accepting freelance work.<br> You can contact me at <a href="mailto:hello@julian.gr">hello@julian.gr</a>',
-    '<a target="_blank" href="https://twitter.com/juliangarnier">twitter.com/juliangarnier</a><br><a target="_blank" href="https://codepen.io/juliangarnier">codepen.io/juliangarnier</a><br><a target="_blank" href="https://github.com/juliangarnier">github.com/juliangarnier</a>',
+    'I\'m Tarun',
+    'I design and code apps and things on the web',
+    'I\'m currently accepting freelance work.<br> You can contact me at <a href="mailto:tarunreddy17519@gmail.com">tarunreddy17519@gmail.com</a>',
+    'You can also contact me on <a target="_blank" href="https://twitter.com/treddy668">Twitter</a>, <a target="_blank" href="https://www.linkedin.com/in/tarun519">LinkedIn </a>and <a target="_blank" href="https://github.com/tarunkumar519">Github</a>',
     getCurrentTime(),
-    '👀 J.'
+    '👀 T.'
   ]
 
   var getFontSize = function() {
