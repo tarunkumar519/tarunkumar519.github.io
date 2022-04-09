@@ -72,5 +72,5 @@ body {
 }
 .bubble .loading b {
   display: inline-block;
-  color: rgba(0,0,0,.5);
+  color: FFFFFF;
 }
