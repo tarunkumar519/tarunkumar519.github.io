@@ -23,7 +23,7 @@ window.onload = function() {
     'I\'m currently accepting freelance work.<br> You can contact me at <a href="mailto:tarunreddy17519@gmail.com">tarunreddy17519@gmail.com</a>',
     'You can also contact me on <a target="_blank" href="https://twitter.com/treddy668">Twitter</a>, <a target="_blank" href="https://www.linkedin.com/in/tarun519">LinkedIn </a>and <a target="_blank" href="https://github.com/tarunkumar519">Github</a>',
     getCurrentTime(),
-    '👀 T.'
+    '👀 T.',
   ]
 
   var getFontSize = function() {
