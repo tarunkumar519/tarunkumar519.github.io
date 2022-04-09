@@ -1,4 +1,4 @@
-:root { font-size: 1.125rem; }
+:root { font-size: 1.125rem; color: FFFFFF; }
 @media (min-width: 600px) { :root { font-size: 1.5rem; } }
 @media (min-width: 900px) { :root { font-size: 1.75rem; } }
 @media (min-width: 1200px) { :root { font-size: 2rem; } }
@@ -14,7 +14,7 @@ body {
   min-width: 100vw;
   min-height: 100vh;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  color: FFFFFF
+  color: FFFFFF;
   background: #FFF;
 }
 .messages {
