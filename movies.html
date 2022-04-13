@@ -1,0 +1,32 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/openplayerjs@latest/dist/openplayer.min.css" />
+    </head>
+    <body>
+        <video class="op-player__media" id="player" controls playsinline>
+            <source src="https://nl32.seedr.cc/ff_get/1145799577/Spider-Man.No.Way.Home.2021.1080p.BluRay.x264.AAC5.1-[YTS.MX].mp4?st=GZN_rWPoWIMp86obTmgx7A&e=1649950503" type="video/mp4" title="1080p" />
+<track kind="subtitles" src="Spider-Man_-No-Way-Home_2021_English-ELSUBTITLE.COM-ST_65658054.srt" srclang="en" label="English" />
+<source src="https://nl29.seedr.cc/ff_get/1145800828/Spider-Man.No.Way.Home.2021.720p.BluRay.x264.AAC-[YTS.MX].mp4?st=Yv3P7mQxd43q5VrrHPUSUw&e=1649950737" title="720p">
+</video>
+            <track kind="subtitles" src="Spider-Man_-No-Way-Home_2021_English-ELSUBTITLE.COM-ST_65658054.srt" srclang="en" label="English" />
+        </video>
+        <script src="https://cdn.jsdelivr.net/npm/openplayerjs@latest/dist/openplayer.min.js"></script>
+
+        <script>
+            document.querySelectorAll('.op-player__media').forEach(player => {
+  const p = new OpenPlayerJS(player.id, {
+    startTime: 0, startVolume: 1,
+    controls: {
+      layers: {
+        left: ['play', 'time', 'volume'],
+        middle: ['progress'],
+        right: ['levels', 'captions', 'settings', 'fullscreen'], 
+      }
+    },
+  });
+  p.init();
+});
+
+        </script>
+    </body>
+</html>
