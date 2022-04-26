@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Chat directly in Whatsapp</title>
+        <meta charset="UTF-8">
+        <style>
+input[type=submit] {
+  border: none;
+  height: 100px;
+  width: 200px
+}
+            input[type="text"]
+{
+    font-size:65px;
+}
+    body, html{
+    
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        display:table;
+    }
+    body {
+        display:table-cell;
+        vertical-align:middle;
+    }
+    form , btnSubmit{
+        display:table;
+        margin:auto;
+    }
+        </style>
+        <script>
+            function validateForm() {
+                //alert('Validating form...');
+                var text = document.getElementById('txtValue').value;
+                text = escape(text);
+                location.href = 'https://api.whatsapp.com/send?phone=+91' + text;
+                return false;
+            }
+        </script>
+    </head>
+    <body><div id="parent">
+        <form id="frmTest" method="get" action="" onsubmit="return validateForm();">
+            <input id="txtValue" type="text" value="Enter number" onfocus="if (this.value == 'Enter number') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Enter number';}"></br></br></br>
+            <input style = "font-size:35px; margin:0px auto; display:block;"id="btnSubmit" type="submit" value="Submit">
+        </form></div>
+    </body>
+</html>
