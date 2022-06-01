@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Jntuh Results</title>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <style>
+input[type=submit] {
+  border: none;
+  height: 100px;
+  width: 200px
+}
+            input[type="text"]
+{
+    font-size:65px;
+}
+    body, html{
+    
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        display:table;
+    }
+    body {
+        display:table-cell;
+        vertical-align:middle;
+    }
+    form , btnSubmit{
+        display:table;
+        margin:auto;
+    }
+select {
+font-size: 50px;
+display: block;
+width:400px;
+height:100px;
+margin: 0 auto;
+
+}
+
+        </style>
+<script>
+            function validateForm() {
+                //alert('Validating form...');
+                var x = document.getElementById("mySelect").value;
+                var text = document.getElementById('txtValue').value;
+                text = escape(text);
+                location.href = "https://enigmahubace.herokuapp.com/showresult?messages=%7B%22rollno%22%3A+%22"+text+"%22%2C+%22examcode%22%3A+%22"+x+"%22%7D";
+                return false;
+            }
+        </script>
+    </head>
+    <body>
+<div class="select">
+  <select id="mySelect">
+    <option value="1289">Regular 1-2</option>
+    <option value="1319">Regular 2-1</option>
+    <option value="1341">Regular 2-2</option>
+    <option value="1387">Regular 3-1</option>
+    <option value="1442">Regular 3-2</option>
+    <option value="1446">Regular 3-2(covid)</option>
+    <option value="1459">Regular 4-1</option>
+    <option value="1463">Regular 4-2</option>
+  </select></div><p class="w3-center">Supplementary results coming soon</P><br><br><br><br>
+<div id="parent">
+        <form id="frmTest" method="get" action="" onsubmit="return validateForm();">
+            <input id="txtValue" type="text" value="Enter Roll number" onfocus="if (this.value == 'Enter Roll number') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Enter Roll number';}"></br></br></br>
+            <input style = "font-size:35px; margin:0px auto; display:block;"id="btnSubmit" type="submit" value="Submit">
+        </form></div><br><br><br>
+        <footer class="w3-container w3-padding-64 w3-center w3-opacity w3-light-grey w3-xlarge">
+
+  <p class="w3-medium">Regular 1-1 Results are not available on JNTUH servers</p>
+  <p class="w3-medium">This page uses python to get past Captcha and get results directly from JNTUH servers. Uses serveral different methods to extract the results, works as long as servers are available.</p>
+</footer>
+    </body>
+</html>
