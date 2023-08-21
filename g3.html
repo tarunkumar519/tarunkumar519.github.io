@@ -1,3 +1,31 @@
 <!DOCTYPE html>
-<html><head><meta http-equiv = "refresh" content = "0; url = tez://upi/pay?pa=ga1325117-1@okaxis&cu=INR&mc=0000&appName=TEST&tn=Netflix 1 Month(3 screens)&am=390&pn=Tarun&tr=TEST-1574159602900" />
-</head><body></body></html>
+<html>
+<head>
+  <title>Update Ping</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+</head>
+<body>
+  <h1>Update Ping</h1>
+  <p id="ping"></p>
+
+  <script>
+    function updatePing() {
+const updatePing = () => {
+  const xhr = new XMLHttpRequest();
+  xhr.open('GET', 'http://139.59.89.163:3001/api/status-page/heartbeat/dns');
+  xhr.onload = function() {
+    if (xhr.status === 200) {
+      const data = JSON.parse(xhr.responseText);
+      document.getElementById('ping').innerHTML = `<strong>Ping:</strong> ${data.ping}`;
+    } else {
+      document.getElementById('ping').innerHTML = 'Error';
+    }
+  };
+  xhr.send();
+};
+
+setInterval(updatePing, 1000);
+
+  </script>
+</body>
+</html>
