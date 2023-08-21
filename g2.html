@@ -13,7 +13,11 @@
 
             // Function to fetch and update ping value
             function fetchAndDisplayPing() {
-                fetch('http://139.59.89.163:3001/api/status-page/heartbeat/dns')
+                fetch('http://139.59.89.163:3001/api/status-page/heartbeat/dns', {
+                    headers: {
+                        'Accept': 'application/json' // Specify that you expect JSON data
+                    }
+                })
                     .then(response => response.json())
                     .then(data => {
                         const pingData = data.heartbeatList['3'];
