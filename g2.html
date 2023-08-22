@@ -1,40 +1,65 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Ping Data</title>
+    <meta charset="UTF-8">
+    <title>Live Ping Display</title>
+    <style>
+        @keyframes ping-animation {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+            50% {
+                transform: scale(1.2);
+                opacity: 0;
+            }
+        }
+
+        #pingValueContainer {
+            display: flex;
+            align-items: center;
+        }
+
+        #pingAnimation {
+            width: 20px;
+            height: 20px;
+            background-color: #3498db;
+            border-radius: 50%;
+            margin-right: 10px;
+            animation: ping-animation 1s linear infinite;
+        }
+
+        #pingValue {
+            font-size: 16px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Ping Data:</h1>
-    <p id="pingValue">Loading...</p>
+    <p id="pingValueContainer">
+        <span id="pingAnimation"></span>
+        <span id="pingValue">Loading...</span> ms
+    </p>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const pingValueElement = document.getElementById("pingValue");
-
-            // Function to fetch and update ping value
-            function fetchAndDisplayPing() {
-                fetch('http://139.59.89.163:3001/api/status-page/heartbeat/dns', {
-                    headers: {
-                        'Accept': 'application/json' // Specify that you expect JSON data
+        $(document).ready(function() {
+            function fetchPing() {
+                var startTime;
+                $.ajax({
+                    url: 'https://dns.tarunx.me/dns-query', // Replace with your desired URL
+                    beforeSend: function() {
+                        startTime = +new Date();
+                    },
+                    complete: function(jqXHR, textStatus) {
+                        var ping = (+new Date()) - startTime;
+                        $("#pingValue").text(ping);
                     }
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        const pingData = data.heartbeatList['3'];
-                        const latestPing = pingData[pingData.length - 1].ping;
-                        pingValueElement.textContent = `Ping Value: ${latestPing}`;
-                    })
-                    .catch(error => {
-                        console.error('Error fetching data:', error);
-                        pingValueElement.textContent = 'Error fetching data';
-                    });
+                });
             }
 
-            // Fetch and display ping value initially
-            fetchAndDisplayPing();
-
-            // Update ping value every 5 seconds (you can adjust the interval)
-            setInterval(fetchAndDisplayPing, 5000); // 5000 milliseconds (5 seconds)
+            // Fetch ping initially and then at regular intervals (e.g., every 5 seconds)
+            fetchPing();
+            setInterval(fetchPing, 5000); // Adjust the interval as needed
         });
     </script>
 </body>
