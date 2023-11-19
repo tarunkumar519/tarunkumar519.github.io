@@ -1446,6 +1446,10 @@ a {
   background-image: linear-gradient(45deg, #965505, #faac4d);
 }
 
+.feature-card.bg-overseerr {
+  background-image: linear-gradient(45deg, #8b5cf6, #6366f1);
+}
+
 .feature-heading {
   margin-top: 0px;
   margin-bottom: 40px;
