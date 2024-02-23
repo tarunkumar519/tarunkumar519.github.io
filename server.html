@@ -211,7 +211,7 @@ Your everyday essentials, available everywhere.</h1>
               <div class="feature-columns w-row">
                 <div class="w-col w-col-7"><img src="images/pihole.jpg" loading="lazy" data-w-id="adaab630-9097-d8a9-44aa-218a0a6521a4" sizes="(max-width: 479px) 100vw, (max-width: 767px) 58vw, (max-width: 991px) 483.21875px, 66vw" srcset="images/pihole-p-500.jpeg 500w, images/pihole-p-800.jpeg 800w, images/pihole-p-1080.jpeg 1080w, images/pihole.jpg 1280w" alt="" class="feature-image feature-image-left"></div>
                 <div class="w-col w-col-5">
-                  <p class="paragraph text-right text-white">Yes, the entire network — not just browsers, <b>even inside apps</b>. No more having ads track you and your family members everywhere on the internet.</p>
+                  <p class="paragraph text-right text-white"><b>Our VPN</b> blocks ads on the entire network — not just browsers, <b>even inside apps</b>. No more having ads track you and your family members everywhere on the internet.</p>
                 </div>
               </div>
             </div>
@@ -748,6 +748,15 @@ Your everyday essentials, available everywhere.</h1>
           $(window).scrollTop(scrollPosition);
         });
       });
+	  // Used to toggle the menu on small screens when clicking on the menu button
+function myFunction() {
+  var x = document.getElementById("navDemo");
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+  } else { 
+    x.className = x.className.replace(" w3-show", "");
+  }
+}
     </script>
   <script>
       $(document).ready(() => {
