@@ -6,13 +6,14 @@
   <meta content="Tarun's Server — a personal cloud for " name="description">
   <meta content="Tarun's Server — a personal cloud for " property="og:title">
   <meta content="Tarun's Server — a personal cloud for " property="og:description">
-  <meta content="https://static.getumbrel.com/open-graph.png" property="og:image">
   <meta content="Tarun's Server — a personal cloud for " property="twitter:title">
   <meta content="Tarun's Server — a personal cloud for " property="twitter:description">
-  <meta content="https://static.getumbrel.com/open-graph.png" property="twitter:image">
   <meta property="og:type" content="website">
   <meta content="summary_large_image" name="twitter:card">
   <meta content="width=device-width, initial-scale=1" name="viewport">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <meta content="Webflow" name="generator">
   <link href="css/normalize.css" rel="stylesheet" type="text/css">
   <link href="css/webflow.css" rel="stylesheet" type="text/css">
@@ -138,6 +139,21 @@
       }
     </style>
 </head>
+<!-- Navbar -->
+<div class="w3-top">
+  <div class="w3-bar w3-black w3-card">
+    <a class="w3-bar-item w3-button w3-padding-large w3-hide-medium w3-hide-large w3-right" href="javascript:void(0)" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+    <a href="#" class="w3-bar-item w3-button w3-padding-large">Tarun's Server</a>
+    <a href="https://tserver.42web.io/login.php" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Login</a>
+    <a href="https://tserver.42web.io/signup.php" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Signup</a>
+  </div>
+</div>
+
+<!-- Navbar on small screens (remove the onclick attribute if you want the navbar to always show on top of the content when clicking on the links) -->
+<div id="navDemo" class="w3-bar-block w3-black w3-hide w3-hide-large w3-hide-medium w3-top" style="margin-top:46px">
+  <a href="https://tserver.42web.io/login.php" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">Login</a>
+  <a href="https://tserver.42web.io/signup.php" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">Signup</a>
+</div>
 <body class="body">
   <div data-w-id="8b4d1f7c-f4d3-78f5-6415-3eca696d56e1" style="filter:blur(0px)" class="content-wrapper">
     <div data-w-id="6cf5c2d0-adae-62ee-1e23-cd002883485b" class="hero wf-section">
@@ -162,20 +178,21 @@
     </div>
     <div id="what" class="section show-overflow-x wf-section">
       <div class="container w-container">
-        <h1 data-w-id="3b8d9383-ba7c-c2dd-897f-cef9da45e217" style="-webkit-transform:translate3d(0, 10PX, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 10PX, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 10PX, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 10PX, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0" class="big-heading">Here&#x27;s what you can do with my Server</h1>
+        <h1 data-w-id="3b8d9383-ba7c-c2dd-897f-cef9da45e217" style="-webkit-transform:translate3d(0, 10PX, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 10PX, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 10PX, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 10PX, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0" class="big-heading">Here&#x27;s what you can do</h1>
 
         <div class="feature-card bg-nextcloud">
           <div class="feature-container">
             <div class="w-row">
               <div class="w-col w-col-7">
-                <h1 data-w-id="ad20d216-7eee-0cde-f931-83577277239d" style="-webkit-transform:translate3d(0, 10PX, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 10PX, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 10PX, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 10PX, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0" class="feature-heading text-white">Run your private cloud with Nextcloud </h1>
+                <h1 data-w-id="ad20d216-7eee-0cde-f931-83577277239d" style="-webkit-transform:translate3d(0, 10PX, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 10PX, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 10PX, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 10PX, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0" class="feature-heading text-white">
+Your everyday essentials, available everywhere.</h1>
               </div>
               <div class="column-8 w-col w-col-5"></div>
             </div>
             <div class="div-block-13">
               <div class="feature-columns reverse w-row">
                 <div class="w-col w-col-5">
-                  <p class="paragraph text-left text-white">An entirely self-hosted Google Drive replacement — store your documents, calendar, contacts, photos and videos on server with Nextcloud instead of Google’s servers.</p>
+                  <p class="paragraph text-left text-white"><b>Nextcloud</b> keeps important data on your Phone and tablet, including all your favourite apps, automatically backed up whenever your device is connected to power and Wi-Fi — so your backup is always up to date.</p>
                 </div>
                 <div class="w-col w-col-7"><img src="images/nextcloud-2.jpg" loading="lazy" data-w-id="2f97a0e1-e0d6-3bf3-2faa-3ec34b011b77" sizes="(max-width: 479px) 100vw, (max-width: 767px) 58vw, (max-width: 991px) 483.21875px, 66vw" srcset="images/nextcloud-2-p-500.jpeg 500w, images/nextcloud-2-p-800.jpeg 800w, images/nextcloud-2-p-1080.jpeg 1080w, images/nextcloud-2.jpg 1280w" alt="" class="feature-image feature-image-right"></div>
               </div>
@@ -187,7 +204,7 @@
             <div class="w-row">
               <div class="w-col w-col-5"></div>
               <div class="column-8 w-col w-col-7">
-                <h1 data-w-id="adaab630-9097-d8a9-44aa-218a0a65219b" style="-webkit-transform:translate3d(0, 10PX, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 10PX, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 10PX, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 10PX, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0" class="feature-heading text-white">Block ads on your entire network with Pi-hole.</h1>
+                <h1 data-w-id="adaab630-9097-d8a9-44aa-218a0a65219b" style="-webkit-transform:translate3d(0, 10PX, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 10PX, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 10PX, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 10PX, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0" class="feature-heading text-white">More privacy.<br>More protection.<br>More peace of mind</h1>
               </div>
             </div>
             <div class="div-block-13">
@@ -230,7 +247,7 @@
               <div class="feature-columns w-row">
                 <div class="w-col w-col-7"><img src="images/bitwarden.png" loading="lazy" data-w-id="7382bdf2-0da1-69f6-628f-9615c87514a0" sizes="(max-width: 479px) 100vw, (max-width: 767px) 58vw, (max-width: 991px) 483.21875px, 66vw" srcset="images/bitwarden.png" alt="" class="feature-image feature-image-left"></div>
                 <div class="w-col w-col-5">
-                  <p class="paragraph text-right text-white">Bitwarden allows you to store your passwords in encrypted vault. Then <b>auto-fill</b> all of your passwords on all devices.</p>
+                  <p class="paragraph text-right text-white"><b>Bitwarden</b> securely stores your passwords and uses AutoFill to make signing in to your favourite apps and websites simple.</p>
                 </div>
               </div>
             </div>
@@ -483,7 +500,7 @@
     </div>
     <div id="features" class="section dark wf-section">
       <div class="container w-container">
-        <h1 data-w-id="b63d0b8d-bb66-f74c-1a45-8bab3622de89" style="-webkit-transform:translate3d(0, 10PX, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 10PX, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 10PX, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 10PX, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0" class="big-heading">I'm not done yet.</h1>
+        <h1 data-w-id="b63d0b8d-bb66-f74c-1a45-8bab3622de89" style="-webkit-transform:translate3d(0, 10PX, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 10PX, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 10PX, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 10PX, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0" class="big-heading">and ..</h1>
         <div class="div-block-3">
           <div class="w-row">
             <div class="column w-col w-col-6">
@@ -500,7 +517,7 @@
                   <div class="card-header">
                     <h2 class="heading card-heading">backup in<br>..3..2..1.</h2><img src="images/icon-remote.svg" loading="lazy" alt="" class="card-icon">
                   </div>
-                  <p class="paragraph text-left">All your data including photos, passwords, files etc are backed up across three locations following 3-2-1 backup strategy, so you can sit in peace.</p>
+                  <p class="paragraph text-left">All your data including photos, passwords, files etc are backed up across three locations following excellent backup strategy, so you can sit in peace.</p>
                 </div><img src="images/backup.png" loading="lazy" data-w-id="b63d0b8d-bb66-f74c-1a45-8bab3622dead" sizes="(max-width: 479px) 80vw, (max-width: 767px) 79vw, (max-width: 991px) 307.796875px, 403.1875px" srcset="images/backup.png" alt="" class="image-4">
               </div>
             </div>
