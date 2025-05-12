@@ -627,7 +627,7 @@
     // VPN Status Check
     async function checkVPNStatus() {
         try {
-            const response = await fetch('http://10.2.0.100', {
+            const response = await fetch('/vpn-check', {
                 method: 'HEAD',
                 mode: 'no-cors',
                 cache: 'no-cache',
@@ -635,11 +635,31 @@
             });
             return true;
         } catch (error) {
+            // If we're on the public domain, try the internal IP
+            if (window.location.hostname === 'tarunx.me') {
+                try {
+                    const internalResponse = await fetch('http://10.2.0.100', {
+                        method: 'HEAD',
+                        mode: 'no-cors',
+                        cache: 'no-cache',
+                        timeout: 2000
+                    });
+                    return true;
+                } catch (internalError) {
+                    return false;
+                }
+            }
             return false;
         }
     }
 
     async function updateVPNStatus() {
+        // Don't show VPN status on mobile
+        if (window.innerWidth <= 768) {
+            document.querySelector('.vpn-status').style.display = 'none';
+            return;
+        }
+
         const isConnected = await checkVPNStatus();
         const statusDot = document.getElementById('status-dot');
         const statusText = document.getElementById('status-text');
