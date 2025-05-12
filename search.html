@@ -406,15 +406,15 @@
                 <!-- Self-hosted services -->
                 <a href="https://cloud.tarunx.me" class="app-item">
                     <img src="https://cdn.jsdelivr.net/gh/selfhst/icons/svg/nextcloud.svg" width="24" height="24" alt="Nextcloud">
-                    <span>Nextcloud</span>
+                    <span>Cloud</span>
                 </a>
                 <a href="https://photos.tarunx.me" class="app-item">
                     <img src="https://cdn.jsdelivr.net/gh/selfhst/icons/svg/immich.svg" width="24" height="24" alt="Immich">
-                    <span>Immich</span>
+                    <span>Photos</span>
                 </a>
                 <a href="https://passwords.tarunx.me" class="app-item">
                     <img src="https://cdn.jsdelivr.net/gh/selfhst/icons/svg/bitwarden.svg" width="24" height="24" alt="Bitwarden">
-                    <span>Bitwarden</span>
+                    <span>Passwords</span>
                 </a>
                 <a href="https://app.plex.tv" class="app-item">
                     <img src="https://cdn.jsdelivr.net/gh/selfhst/icons/svg/plex.svg" width="24" height="24" alt="Plex">
@@ -620,17 +620,31 @@
 
     // VPN Status Check
     async function checkVPNStatus() {
-        try {
-            const response = await fetch('http://10.2.0.100', {
-                method: 'HEAD',
-                mode: 'no-cors',
-                cache: 'no-cache',
-                timeout: 2000
-            });
-            return true;
-        } catch (error) {
-            return false;
-        }
+        return new Promise((resolve) => {
+            const img = new Image();
+            const timeoutId = setTimeout(() => {
+                img.src = '';
+                resolve(false);
+            }, 2000);
+
+            img.onload = function() {
+                clearTimeout(timeoutId);
+                resolve(true);
+            };
+
+            img.onerror = function() {
+                clearTimeout(timeoutId);
+                // For mobile browsers, we'll consider an error as a potential VPN connection
+                if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                    resolve(true);
+                } else {
+                    resolve(false);
+                }
+            };
+
+            // Add timestamp to prevent caching
+            img.src = 'http://10.2.0.100/favicon.ico?' + new Date().getTime();
+        });
     }
 
     async function updateVPNStatus() {
