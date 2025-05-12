@@ -627,27 +627,20 @@
     // VPN Status Check
     async function checkVPNStatus() {
         try {
-            const response = await fetch('/vpn-check', {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 2000);
+
+            const response = await fetch('http://10.2.0.100', {
                 method: 'HEAD',
                 mode: 'no-cors',
-                cache: 'no-cache',
-                timeout: 2000
+                signal: controller.signal
             });
+            clearTimeout(timeoutId);
             return true;
         } catch (error) {
-            // If we're on the public domain, try the internal IP
-            if (window.location.hostname === 'tarunx.me') {
-                try {
-                    const internalResponse = await fetch('http://10.2.0.100', {
-                        method: 'HEAD',
-                        mode: 'no-cors',
-                        cache: 'no-cache',
-                        timeout: 2000
-                    });
-                    return true;
-                } catch (internalError) {
-                    return false;
-                }
+            // If we get a network error, it means the VPN endpoint is not accessible
+            if (error.name === 'TypeError' || error.name === 'AbortError') {
+                return false;
             }
             return false;
         }
