@@ -58,6 +58,8 @@
             padding: 15px;
             align-items: center;
             flex-wrap: wrap;
+            position: relative;
+            z-index: 100;
         }
 
         .nav-item {
@@ -65,6 +67,9 @@
             font-size: 13px;
             color: var(--text-color);
             text-decoration: none;
+            cursor: pointer;
+            position: relative;
+            z-index: 101;
         }
 
         .nav-item:hover {
@@ -332,11 +337,64 @@
                 font-size: 14px;
             }
         }
+
+        .vpn-status {
+            display: flex;
+            align-items: center;
+            margin-right: 15px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 6px;
+        }
+
+        .status-dot.connected {
+            background-color: #34a853;
+        }
+
+        .status-dot.disconnected {
+            background-color: #ea4335;
+        }
+
+        .status-text {
+            font-size: 13px;
+            color: var(--text-color);
+        }
+
+        .vpn-tooltip {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--bg-color);
+            padding: 8px 12px;
+            border-radius: 4px;
+            box-shadow: 0 2px 6px var(--search-box-shadow);
+            font-size: 12px;
+            white-space: nowrap;
+            display: none;
+            z-index: 1000;
+            border: 1px solid var(--border-color);
+        }
+
+        .vpn-status:hover .vpn-tooltip {
+            display: block;
+        }
     </style>
 </head>
 <body>
     <div class="header">
-        <a href="https://gmail.com" class="nav-item" target="_blank">Gmail</a>
+        <div class="vpn-status" id="vpn-status">
+            <div class="status-dot disconnected" id="status-dot"></div>
+            <span class="status-text" id="status-text">Disconnected</span>
+            <div class="vpn-tooltip" id="vpn-tooltip">Private VPN is disconnected</div>
+        </div>
+        <a href="https://gmail.com" class="nav-item" target="_blank" rel="noopener noreferrer" style="pointer-events: auto;">Gmail</a>
         
         <div class="apps-menu">
             <button class="apps-button" id="apps-toggle">
@@ -362,7 +420,7 @@
                     <img src="https://cdn.jsdelivr.net/gh/selfhst/icons/svg/plex.svg" width="24" height="24" alt="Plex">
                     <span>Plex</span>
                 </a>
-                <a href="https://requests.tarunx.me" class="app-item">
+                <a href="https://request.tarunx.me" class="app-item">
                     <img src="https://cdn.jsdelivr.net/gh/selfhst/icons/svg/overseerr.svg" width="24" height="24" alt="Overseerr">
                     <span>Overseerr</span>
                 </a>
@@ -559,6 +617,48 @@
     });
     
     searchButton.addEventListener('click', performSearch);
-</script>
+
+    // VPN Status Check
+    async function checkVPNStatus() {
+        try {
+            const response = await fetch('http://10.2.0.100', {
+                method: 'HEAD',
+                mode: 'no-cors',
+                cache: 'no-cache',
+                timeout: 2000
+            });
+            return true;
+        } catch (error) {
+            return false;
+        }
+    }
+
+    async function updateVPNStatus() {
+        const isConnected = await checkVPNStatus();
+        const statusDot = document.getElementById('status-dot');
+        const statusText = document.getElementById('status-text');
+        const vpnTooltip = document.getElementById('vpn-tooltip');
+
+        if (isConnected) {
+            statusDot.className = 'status-dot connected';
+            statusText.textContent = 'Connected';
+            vpnTooltip.textContent = 'Private VPN is connected';
+        } else {
+            statusDot.className = 'status-dot disconnected';
+            statusText.textContent = 'Disconnected';
+            vpnTooltip.textContent = 'Private VPN is disconnected';
+        }
+    }
+
+    // Check VPN status every 30 seconds
+    updateVPNStatus();
+    setInterval(updateVPNStatus, 30000);
+
+    // Add click handler for VPN status
+    document.getElementById('vpn-status').addEventListener('click', function() {
+        const tooltip = document.getElementById('vpn-tooltip');
+        tooltip.style.display = tooltip.style.display === 'block' ? 'none' : 'block';
+    });
+    </script>
 </body>
 </html> 
