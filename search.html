@@ -346,6 +346,12 @@
             position: relative;
         }
 
+        @media (max-width: 768px) {
+            .vpn-status {
+                display: none;
+            }
+        }
+
         .status-dot {
             width: 8px;
             height: 8px;
@@ -620,39 +626,20 @@
 
     // VPN Status Check
     async function checkVPNStatus() {
-        return new Promise((resolve) => {
-            const img = new Image();
-            const timeoutId = setTimeout(() => {
-                img.src = '';
-                resolve(false);
-            }, 1000);
-
-            img.onload = function() {
-                clearTimeout(timeoutId);
-                resolve(true);
-            };
-
-            img.onerror = function() {
-                clearTimeout(timeoutId);
-                resolve(false);
-            };
-
-            // Try to load a small image from the VPN endpoint
-            img.src = 'http://10.2.0.100/favicon.ico?' + new Date().getTime();
-        });
+        try {
+            const response = await fetch('http://10.2.0.100', {
+                method: 'HEAD',
+                mode: 'no-cors',
+                cache: 'no-cache',
+                timeout: 2000
+            });
+            return true;
+        } catch (error) {
+            return false;
+        }
     }
 
-    let vpnCheckInterval;
-    let isFirstCheck = true;
-
     async function updateVPNStatus() {
-        // Don't block initial page load
-        if (isFirstCheck) {
-            isFirstCheck = false;
-            setTimeout(updateVPNStatus, 1000);
-            return;
-        }
-
         const isConnected = await checkVPNStatus();
         const statusDot = document.getElementById('status-dot');
         const statusText = document.getElementById('status-text');
@@ -669,19 +656,9 @@
         }
     }
 
-    // Start VPN check after page load
-    window.addEventListener('load', function() {
-        updateVPNStatus();
-        // Check every 30 seconds
-        vpnCheckInterval = setInterval(updateVPNStatus, 30000);
-    });
-
-    // Clean up interval when page is unloaded
-    window.addEventListener('unload', function() {
-        if (vpnCheckInterval) {
-            clearInterval(vpnCheckInterval);
-        }
-    });
+    // Check VPN status every 30 seconds
+    updateVPNStatus();
+    setInterval(updateVPNStatus, 30000);
 
     // Add click handler for VPN status
     document.getElementById('vpn-status').addEventListener('click', function() {
