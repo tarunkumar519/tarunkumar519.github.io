@@ -348,7 +348,14 @@
 
         @media (max-width: 768px) {
             .vpn-status {
-                display: none;
+                margin-right: 10px;
+            }
+            .status-text {
+                font-size: 12px;
+            }
+            .vpn-tooltip {
+                font-size: 11px;
+                padding: 6px 10px;
             }
         }
 
@@ -658,12 +665,6 @@
     }
 
     async function updateVPNStatus() {
-        // Don't show VPN status on mobile
-        if (window.innerWidth <= 768) {
-            document.querySelector('.vpn-status').style.display = 'none';
-            return;
-        }
-
         const isConnected = await checkVPNStatus();
         const statusDot = document.getElementById('status-dot');
         const statusText = document.getElementById('status-text');
