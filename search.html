@@ -123,6 +123,18 @@
             cursor: pointer;
             text-decoration: none;
             color: var(--text-color);
+            gap: 8px;
+        }
+
+        .app-item img {
+            width: 24px;
+            height: 24px;
+            margin-bottom: 4px;
+        }
+
+        .app-item span {
+            font-size: 13px;
+            text-align: center;
         }
 
         .app-item:hover {
@@ -324,7 +336,7 @@
 </head>
 <body>
     <div class="header">
-        <a href="https://gmail.com" class="nav-item">Gmail</a>
+        <a href="https://gmail.com" class="nav-item" target="_blank">Gmail</a>
         
         <div class="apps-menu">
             <button class="apps-button" id="apps-toggle">
@@ -333,59 +345,30 @@
                 </svg>
             </button>
             <div class="apps-grid" id="apps-grid">
-                <a href="https://mail.google.com" class="app-item">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                        <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" fill="#5f6368"/>
-                    </svg>
-                    <span>Gmail</span>
+                <!-- Self-hosted services -->
+                <a href="https://cloud.tarunx.me" class="app-item">
+                    <img src="https://cdn.jsdelivr.net/gh/selfhst/icons/svg/nextcloud.svg" width="24" height="24" alt="Nextcloud">
+                    <span>Nextcloud</span>
                 </a>
-                <a href="https://drive.google.com" class="app-item">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                        <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM19 18H6c-2.21 0-4-1.79-4-4 0-2.05 1.53-3.76 3.56-3.97l1.07-.11.5-.95C8.08 7.14 9.94 6 12 6c2.62 0 4.88 1.86 5.39 4.43l.3 1.5 1.53.11c1.56.1 2.78 1.41 2.78 2.96 0 1.65-1.35 3-3 3zm-5.55-8h-2.9v3H8l4 4 4-4h-2.55z" fill="#5f6368"/>
-                    </svg>
-                    <span>Drive</span>
+                <a href="https://photos.tarunx.me" class="app-item">
+                    <img src="https://cdn.jsdelivr.net/gh/selfhst/icons/svg/immich.svg" width="24" height="24" alt="Immich">
+                    <span>Immich</span>
                 </a>
-                <a href="https://calendar.google.com" class="app-item">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                        <path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zM9 14H7v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2zm-8 4H7v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2z" fill="#5f6368"/>
-                    </svg>
-                    <span>Calendar</span>
+                <a href="https://passwords.tarunx.me" class="app-item">
+                    <img src="https://cdn.jsdelivr.net/gh/selfhst/icons/svg/bitwarden.svg" width="24" height="24" alt="Bitwarden">
+                    <span>Bitwarden</span>
                 </a>
-                <a href="https://meet.google.com" class="app-item">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                        <path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z" fill="#5f6368"/>
-                    </svg>
-                    <span>Meet</span>
+                <a href="https://app.plex.tv" class="app-item">
+                    <img src="https://cdn.jsdelivr.net/gh/selfhst/icons/svg/plex.svg" width="24" height="24" alt="Plex">
+                    <span>Plex</span>
                 </a>
-                <a href="https://chat.google.com" class="app-item">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                        <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z" fill="#5f6368"/>
-                    </svg>
-                    <span>Chat</span>
+                <a href="https://requests.tarunx.me" class="app-item">
+                    <img src="https://cdn.jsdelivr.net/gh/selfhst/icons/svg/overseerr.svg" width="24" height="24" alt="Overseerr">
+                    <span>Overseerr</span>
                 </a>
-                <a href="https://contacts.google.com" class="app-item">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" fill="#5f6368"/>
-                    </svg>
-                    <span>Contacts</span>
-                </a>
-                <a href="https://photos.google.com" class="app-item">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                        <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z" fill="#5f6368"/>
-                    </svg>
-                    <span>Photos</span>
-                </a>
-                <a href="https://maps.google.com" class="app-item">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="#5f6368"/>
-                    </svg>
-                    <span>Maps</span>
-                </a>
-                <a href="https://youtube.com" class="app-item">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                        <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z" fill="#5f6368"/>
-                    </svg>
-                    <span>YouTube</span>
+                <a href="http://10.2.0.100/admin" class="app-item">
+                    <img src="https://cdn.jsdelivr.net/gh/selfhst/icons/svg/wireguard.svg" width="24" height="24" alt="VPN">
+                    <span>VPN</span>
                 </a>
             </div>
         </div>
