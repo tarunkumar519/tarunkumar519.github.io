@@ -626,24 +626,35 @@
 
     // VPN Status Check
     async function checkVPNStatus() {
-        try {
-            const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 2000);
+        return new Promise((resolve) => {
+            const img = new Image();
+            const timeoutId = setTimeout(() => {
+                img.src = '';
+                resolve(false);
+            }, 2000);
 
-            const response = await fetch('http://10.2.0.100', {
-                method: 'HEAD',
-                mode: 'no-cors',
-                signal: controller.signal
-            });
-            clearTimeout(timeoutId);
-            return true;
-        } catch (error) {
-            // If we get a network error, it means the VPN endpoint is not accessible
-            if (error.name === 'TypeError' || error.name === 'AbortError') {
-                return false;
-            }
-            return false;
-        }
+            img.onload = function() {
+                clearTimeout(timeoutId);
+                resolve(true);
+            };
+
+            img.onerror = function() {
+                clearTimeout(timeoutId);
+                resolve(false);
+            };
+
+            // Try to load a small image from the VPN endpoint
+            // Using a data URL to avoid mixed content warning
+            img.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+            setTimeout(() => {
+                try {
+                    // This will fail if VPN is not connected
+                    img.src = 'http://10.2.0.100/favicon.ico?' + new Date().getTime();
+                } catch (e) {
+                    resolve(false);
+                }
+            }, 0);
+        });
     }
 
     async function updateVPNStatus() {
