@@ -686,20 +686,14 @@
         
         elements.searchButton.addEventListener('click', performSearch);
 
-        // VPN Status Check with improved performance and reliability
-        async function checkVPNStatus(retryCount = 0) {
+        // VPN Status Check with improved performance
+        async function checkVPNStatus() {
             return new Promise((resolve) => {
                 const img = new Image();
                 const timeoutId = setTimeout(() => {
                     img.src = '';
-                    if (retryCount < 2) { // Retry up to 2 times
-                        setTimeout(() => {
-                            checkVPNStatus(retryCount + 1).then(resolve);
-                        }, 1000); // Wait 1 second before retry
-                    } else {
-                        resolve(false);
-                    }
-                }, 1500);
+                    resolve(false);
+                }, 1500); // Reduced timeout for faster response
 
                 img.onload = function() {
                     clearTimeout(timeoutId);
@@ -708,13 +702,7 @@
 
                 img.onerror = function() {
                     clearTimeout(timeoutId);
-                    if (retryCount < 2) { // Retry up to 2 times
-                        setTimeout(() => {
-                            checkVPNStatus(retryCount + 1).then(resolve);
-                        }, 1000); // Wait 1 second before retry
-                    } else {
-                        resolve(false);
-                    }
+                    resolve(false);
                 };
 
                 img.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
@@ -722,13 +710,7 @@
                     try {
                         img.src = 'http://10.2.0.100/favicon.ico?' + new Date().getTime();
                     } catch (e) {
-                        if (retryCount < 2) { // Retry up to 2 times
-                            setTimeout(() => {
-                                checkVPNStatus(retryCount + 1).then(resolve);
-                            }, 1000); // Wait 1 second before retry
-                        } else {
-                            resolve(false);
-                        }
+                        resolve(false);
                     }
                 }, 0);
             });
@@ -741,15 +723,8 @@
             elements.vpnTooltip.textContent = 'Private VPN is ' + (isConnected ? 'connected' : 'disconnected');
         }
 
-        // Initial VPN status check with delay
-        window.addEventListener('load', () => {
-            // Wait for 1 second after page load before first check
-            setTimeout(() => {
-                updateVPNStatus();
-            }, 1000);
-        });
-
-        // Regular status checks every 30 seconds
+        // Check VPN status every 30 seconds
+        updateVPNStatus();
         setInterval(updateVPNStatus, 30000);
 
         // Add click handler for VPN status
