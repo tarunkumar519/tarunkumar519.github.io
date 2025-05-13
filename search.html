@@ -431,7 +431,7 @@
                     <img src="https://cdn.jsdelivr.net/gh/selfhst/icons/svg/overseerr.svg" width="24" height="24" alt="Overseerr">
                     <span>Overseerr</span>
                 </a>
-                <a href="http://10.2.0.100/admin" class="app-item">
+                <a href="http://10.2.0.100/admin" class="app-item" id="vpn-menu-item" style="display: none;">
                     <img src="https://cdn.jsdelivr.net/gh/selfhst/icons/svg/wireguard.svg" width="24" height="24" alt="VPN">
                     <span>VPN</span>
                 </a>
@@ -626,53 +626,54 @@
     searchButton.addEventListener('click', performSearch);
 
     // VPN Status Check
-    function checkVPNStatus() {
-        return new Promise((resolve) => {
-            const xhr = new XMLHttpRequest();
-            const timeoutId = setTimeout(() => {
-                xhr.abort();
-                resolve(false);
-            }, 1000);
+    async function checkVPNStatus() {
+        try {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 1000);
 
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === 4) {
-                    clearTimeout(timeoutId);
-                    // If we get any response (even 404), VPN is connected
-                    resolve(true);
-                }
-            };
+            const response = await fetch('http://10.2.0.100/admin', {
+                method: 'HEAD',
+                signal: controller.signal
+            });
 
-            xhr.onerror = function() {
-                clearTimeout(timeoutId);
-                resolve(false);
-            };
-
-            try {
-                xhr.open('HEAD', 'http://10.2.0.100/admin', true);
-                xhr.send();
-            } catch (error) {
-                clearTimeout(timeoutId);
-                resolve(false);
-            }
-        });
+            clearTimeout(timeoutId);
+            console.log('VPN Check Response:', response.status);
+            return response.status >= 200 && response.status < 500;
+        } catch (error) {
+            console.log('VPN Check Error:', error);
+            return false;
+        }
     }
 
     async function updateVPNStatus() {
         const isConnected = await checkVPNStatus();
+        console.log('VPN Status:', isConnected ? 'Connected' : 'Disconnected');
+        
         const statusDot = document.getElementById('status-dot');
         const statusText = document.getElementById('status-text');
         const vpnTooltip = document.getElementById('vpn-tooltip');
+        const vpnMenuItem = document.getElementById('vpn-menu-item');
 
         if (isConnected) {
             statusDot.className = 'status-dot connected';
             statusText.textContent = 'Connected';
             vpnTooltip.textContent = 'Private VPN is connected';
+            vpnMenuItem.style.display = 'flex';
         } else {
             statusDot.className = 'status-dot disconnected';
             statusText.textContent = 'Disconnected';
             vpnTooltip.textContent = 'Private VPN is disconnected';
+            vpnMenuItem.style.display = 'none';
         }
     }
+
+    // Add lazy loading to all images
+    document.addEventListener('DOMContentLoaded', function() {
+        const images = document.querySelectorAll('img');
+        images.forEach(img => {
+            img.loading = 'lazy';
+        });
+    });
 
     // Check VPN status every 5 seconds
     updateVPNStatus();
