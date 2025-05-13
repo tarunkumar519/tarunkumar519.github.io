@@ -626,18 +626,35 @@
     searchButton.addEventListener('click', performSearch);
 
     // VPN Status Check
-    async function checkVPNStatus() {
-        try {
-            const response = await fetch('http://10.2.0.100/favicon.ico', {
-                method: 'HEAD',
-                cache: 'no-cache'
-            });
-            // If we get any response (even 404), VPN is connected
-            return true;
-        } catch (error) {
-            // If we can't reach the server at all, VPN is disconnected
-            return false;
-        }
+    function checkVPNStatus() {
+        return new Promise((resolve) => {
+            const xhr = new XMLHttpRequest();
+            const timeoutId = setTimeout(() => {
+                xhr.abort();
+                resolve(false);
+            }, 1000);
+
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                    clearTimeout(timeoutId);
+                    // If we get any response (even 404), VPN is connected
+                    resolve(true);
+                }
+            };
+
+            xhr.onerror = function() {
+                clearTimeout(timeoutId);
+                resolve(false);
+            };
+
+            try {
+                xhr.open('HEAD', 'http://10.2.0.100/admin', true);
+                xhr.send();
+            } catch (error) {
+                clearTimeout(timeoutId);
+                resolve(false);
+            }
+        });
     }
 
     async function updateVPNStatus() {
