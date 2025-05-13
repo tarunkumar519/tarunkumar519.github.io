@@ -503,7 +503,6 @@
     const searchInput = document.getElementById('search-input');
     const searchButton = document.getElementById('search-button');
     const autocompleteResults = document.getElementById('autocomplete-results');
-    let debounceTimer;
     
     function performSearch() {
         const query = searchInput.value;
@@ -569,12 +568,9 @@
         }
     };
     
-    // Add input event to search input with debounce
+    // Add input event to search input without debounce
     searchInput.addEventListener('input', function() {
-        clearTimeout(debounceTimer);
-        debounceTimer = setTimeout(() => {
-            fetchAutocompleteSuggestions(searchInput.value);
-        }, 300);
+        fetchAutocompleteSuggestions(searchInput.value);
     });
     
     // Hide autocomplete when clicking outside
@@ -630,35 +626,17 @@
 
     // VPN Status Check
     async function checkVPNStatus() {
-        return new Promise((resolve) => {
-            const img = new Image();
-            const timeoutId = setTimeout(() => {
-                img.src = '';
-                resolve(false);
-            }, 2000);
-
-            img.onload = function() {
-                clearTimeout(timeoutId);
-                resolve(true);
-            };
-
-            img.onerror = function() {
-                clearTimeout(timeoutId);
-                resolve(false);
-            };
-
-            // Try to load a small image from the VPN endpoint
-            // Using a data URL to avoid mixed content warning
-            img.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
-            setTimeout(() => {
-                try {
-                    // This will fail if VPN is not connected
-                    img.src = 'http://10.2.0.100/favicon.ico?' + new Date().getTime();
-                } catch (e) {
-                    resolve(false);
-                }
-            }, 0);
-        });
+        try {
+            const response = await fetch('http://10.2.0.100/favicon.ico', {
+                method: 'HEAD',
+                cache: 'no-cache'
+            });
+            // If we get any response (even 404), VPN is connected
+            return true;
+        } catch (error) {
+            // If we can't reach the server at all, VPN is disconnected
+            return false;
+        }
     }
 
     async function updateVPNStatus() {
@@ -678,9 +656,9 @@
         }
     }
 
-    // Check VPN status every 30 seconds
+    // Check VPN status every 5 seconds
     updateVPNStatus();
-    setInterval(updateVPNStatus, 30000);
+    setInterval(updateVPNStatus, 5000);
 
     // Add click handler for VPN status
     document.getElementById('vpn-status').addEventListener('click', function() {
