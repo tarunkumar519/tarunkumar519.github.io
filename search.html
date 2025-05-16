@@ -187,6 +187,15 @@
             height: 46px;
             background-color: var(--bg-color);
             margin-bottom: 20px;
+            position: relative;
+            z-index: 1001;
+        }
+        
+        .search-box.with-suggestions {
+            border-radius: 24px 24px 0 0;
+            border-bottom: none;
+            box-shadow: 0 1px 6px var(--search-box-shadow);
+            margin-bottom: 0;
         }
 
         .search-box:hover {
@@ -247,18 +256,19 @@
         .autocomplete-results {
             position: absolute;
             top: 46px;
-            left: 0;
-            right: 0;
+            left: 20px;
+            right: 20px;
+            width: calc(100% - 40px);
             background: var(--bg-color);
             border-radius: 0 0 24px 24px;
             box-shadow: 0 4px 6px var(--search-box-shadow);
-            margin-top: -1px;
             display: none;
             z-index: 1000;
             border: 1px solid var(--border-color);
             border-top: none;
             max-height: 300px;
             overflow-y: auto;
+            padding-bottom: 8px;
         }
 
         .autocomplete-item {
@@ -320,6 +330,12 @@
                 width: 36px;
                 height: 36px;
             }
+            
+            .autocomplete-results {
+                left: 10px;
+                right: 10px;
+                width: calc(100% - 20px);
+            }
         }
 
         @media (max-width: 400px) {
@@ -376,17 +392,65 @@
         .vpn-tooltip {
             position: absolute;
             top: 100%;
-            left: 50%;
-            transform: translateX(-50%);
+            left: 0;
+            transform: translateX(-25%);
             background: var(--bg-color);
-            padding: 8px 12px;
-            border-radius: 4px;
-            box-shadow: 0 2px 6px var(--search-box-shadow);
-            font-size: 12px;
-            white-space: nowrap;
+            padding: 12px 16px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px var(--search-box-shadow);
+            font-size: 13px;
             display: none;
             z-index: 1000;
             border: 1px solid var(--border-color);
+            min-width: 250px;
+            margin-top: 10px;
+        }
+        
+        .pihole-stats {
+            margin-top: 10px;
+        }
+        
+        .status-link {
+            position: fixed;
+            bottom: 15px;
+            left: 15px;
+            font-size: 13px;
+            color: var(--search-icon-color);
+            text-decoration: none;
+            opacity: 0.7;
+            transition: opacity 0.2s ease;
+        }
+        
+        .status-link:hover {
+            opacity: 1;
+            text-decoration: underline;
+        }
+        
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 6px;
+            color: var(--text-color);
+        }
+        
+        .stat-label {
+            font-weight: 500;
+        }
+        
+        .stat-value {
+            font-weight: 700;
+        }
+        
+        .stat-blocked {
+            color: #ea4335;
+        }
+        
+        .stat-total {
+            color: #4285f4;
+        }
+        
+        .stat-percent {
+            color: #34a853;
         }
 
         .vpn-status:hover .vpn-tooltip {
@@ -479,6 +543,9 @@
             </div>
         </div>
     </div>
+    
+    <!-- Status link at bottom left -->
+    <a href="https://status.tarunx.me" class="status-link" target="_blank" rel="noopener">Check Status</a>
 
  <script>
     // Toggle Apps menu
@@ -530,11 +597,13 @@
             autocompleteResults.style.display = 'none';
         }
     }
-    
+
     // Callback function for JSONP response
     window.handleSuggestions = function(data) {
         const suggestions = data[1];
-        
+        const query = searchInput.value.trim();
+        const searchBox = document.querySelector('.search-box');
+
         if (suggestions && suggestions.length > 0) {
             autocompleteResults.innerHTML = '';
             
@@ -557,6 +626,7 @@
                 item.addEventListener('click', function() {
                     searchInput.value = suggestion;
                     autocompleteResults.style.display = 'none';
+                    searchBox.classList.remove('with-suggestions');
                     performSearch();
                 });
                 
@@ -564,30 +634,67 @@
             });
             
             autocompleteResults.style.display = 'block';
+            searchBox.classList.add('with-suggestions');
         } else {
             autocompleteResults.style.display = 'none';
+            searchBox.classList.remove('with-suggestions');
         }
     };
-    
+
     // Add input event to search input without debounce
     searchInput.addEventListener('input', function() {
-        fetchAutocompleteSuggestions(searchInput.value);
-    });
-    
-    // Hide autocomplete when clicking outside
-    document.addEventListener('click', function(event) {
-        if (!searchInput.contains(event.target) && !autocompleteResults.contains(event.target)) {
+        const query = this.value.trim();
+        const searchBox = document.querySelector('.search-box');
+
+        if (query.length > 0) {
+            // Use real Google suggestions
+            fetchAutocompleteSuggestions(query);
+        } else {
             autocompleteResults.style.display = 'none';
+            searchBox.classList.remove('with-suggestions');
         }
     });
     
+    // Function to display autocomplete results
+    function displayAutocomplete(results, query) {
+        autocompleteResults.innerHTML = '';
+        
+        results.forEach(result => {
+            const item = document.createElement('div');
+            item.className = 'autocomplete-item';
+            
+            // Add search icon
+            const iconDiv = document.createElement('div');
+            iconDiv.className = 'search-icon-small';
+            iconDiv.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="currentColor" d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>`;
+            item.appendChild(iconDiv);
+            
+            // Add text
+            const textSpan = document.createElement('span');
+            textSpan.textContent = result;
+            item.appendChild(textSpan);
+            
+            item.addEventListener('click', function() {
+                searchInput.value = result;
+                autocompleteResults.style.display = 'none';
+                document.querySelector('.search-box').classList.remove('with-suggestions');
+                performSearch();
+            });
+            
+            autocompleteResults.appendChild(item);
+        });
+        
+        autocompleteResults.style.display = 'block';
+    }
+
     // Handle keyboard navigation for autocomplete
     searchInput.addEventListener('keydown', function(event) {
         if (autocompleteResults.style.display === 'block') {
             const items = autocompleteResults.querySelectorAll('.autocomplete-item');
             let activeIndex = Array.from(items).findIndex(item => item.classList.contains('active'));
-            
-            switch(event.key) {
+            const searchBox = document.querySelector('.search-box');
+
+            switch (event.key) {
                 case 'ArrowDown':
                     event.preventDefault();
                     if (activeIndex < items.length - 1) {
@@ -606,12 +713,14 @@
                     break;
                 case 'Escape':
                     autocompleteResults.style.display = 'none';
+                    searchBox.classList.remove('with-suggestions');
                     break;
                 case 'Enter':
                     if (activeIndex >= 0) {
                         event.preventDefault();
                         searchInput.value = items[activeIndex].textContent.trim();
                         autocompleteResults.style.display = 'none';
+                        searchBox.classList.remove('with-suggestions');
                         performSearch();
                     } else {
                         performSearch();
@@ -628,22 +737,42 @@
     // VPN Status Check
     async function checkVPNStatus() {
         try {
-            const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 1000);
-
-            const response = await fetch('http://10.2.0.100/admin', {
-                method: 'HEAD',
-                signal: controller.signal
+            // Create an image element to test if we can load a resource from the Pi-hole admin
+            // This is a more reliable way to check connectivity than fetch() which might be blocked by CORS
+            return new Promise((resolve) => {
+                const img = new Image();
+                const timestamp = new Date().getTime(); // Add timestamp to prevent caching
+                img.src = 'http://10.2.0.100/admin/img/logo.svg?' + timestamp;
+                
+                // Set a timeout to catch failed connections
+                const timeoutId = setTimeout(() => {
+                    console.log('VPN Check: Connection timed out');
+                    img.onload = img.onerror = null;
+                    resolve(false);
+                }, 2000);
+                
+                // If image loads, VPN is connected
+                img.onload = () => {
+                    clearTimeout(timeoutId);
+                    console.log('VPN Check: Connected');
+                    resolve(true);
+                };
+                
+                // If image fails to load, VPN is disconnected
+                img.onerror = () => {
+                    clearTimeout(timeoutId);
+                    console.log('VPN Check: Disconnected');
+                    resolve(false);
+                };
             });
-
-            clearTimeout(timeoutId);
-            console.log('VPN Check Response:', response.status);
-            return response.status >= 200 && response.status < 500;
         } catch (error) {
             console.log('VPN Check Error:', error);
             return false;
         }
     }
+    
+    // Placeholder for future Pi-hole stats implementation
+    // Stats functionality will be implemented later
 
     async function updateVPNStatus() {
         const isConnected = await checkVPNStatus();
@@ -658,31 +787,60 @@
             statusDot.className = 'status-dot connected';
             statusText.textContent = 'Connected';
             vpnTooltip.textContent = 'Private VPN is connected';
-            vpnMenuItem.style.display = 'flex';
+            
+            // Check if vpnMenuItem exists before trying to modify it
+            if (vpnMenuItem) {
+                vpnMenuItem.style.display = 'flex';
+            }
         } else {
             statusDot.className = 'status-dot disconnected';
             statusText.textContent = 'Disconnected';
             vpnTooltip.textContent = 'Private VPN is disconnected';
-            vpnMenuItem.style.display = 'none';
+            // Check if vpnMenuItem exists before trying to modify it
+            if (vpnMenuItem) {
+                vpnMenuItem.style.display = 'none';
+            }
         }
     }
-
-    // Add lazy loading to all images
-    document.addEventListener('DOMContentLoaded', function() {
-        const images = document.querySelectorAll('img');
-        images.forEach(img => {
-            img.loading = 'lazy';
-        });
-    });
 
     // Check VPN status every 5 seconds
     updateVPNStatus();
     setInterval(updateVPNStatus, 5000);
 
     // Add click handler for VPN status
-    document.getElementById('vpn-status').addEventListener('click', function() {
+    document.getElementById('vpn-status').addEventListener('click', function(event) {
+        // Prevent the click from propagating to document
+        event.stopPropagation();
+        
         const tooltip = document.getElementById('vpn-tooltip');
-        tooltip.style.display = tooltip.style.display === 'block' ? 'none' : 'block';
+        const isConnected = document.getElementById('status-dot').classList.contains('connected');
+        
+        // Simply toggle the tooltip visibility
+        if (tooltip.style.display === 'block') {
+            tooltip.style.display = 'none';
+        } else {
+            tooltip.style.display = 'block';
+            
+            // Update tooltip text based on connection status
+            if (isConnected) {
+                tooltip.textContent = 'Private VPN is connected';
+            } else {
+                tooltip.textContent = 'Private VPN is disconnected';
+            }
+        }
+    });
+    
+    // Close VPN tooltip when clicking outside
+    document.addEventListener('click', function(event) {
+        const tooltip = document.getElementById('vpn-tooltip');
+        const vpnStatus = document.getElementById('vpn-status');
+        
+        // If tooltip is visible and click is outside of tooltip and VPN status
+        if (tooltip.style.display === 'block' && 
+            !tooltip.contains(event.target) && 
+            !vpnStatus.contains(event.target)) {
+            tooltip.style.display = 'none';
+        }
     });
 
     // Voice Search Functionality
