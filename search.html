@@ -352,7 +352,7 @@
             }
         }
 
-        .vpn-status {
+        .dns-status {
             display: flex;
             align-items: center;
             margin-right: 15px;
@@ -361,7 +361,7 @@
         }
 
         @media (max-width: 768px) {
-            .vpn-status {
+            .dns-status {
                 margin-right: 10px;
             }
             .status-text {
@@ -376,12 +376,23 @@
             margin-right: 6px;
         }
 
-        .status-dot.connected {
+        .status-dot.secure {
             background-color: #34a853;
         }
 
-        .status-dot.disconnected {
+        .status-dot.leaking {
             background-color: #ea4335;
+        }
+
+        .status-dot.checking {
+            background-color: #fbbc05;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.5; }
+            50% { opacity: 1; }
+            100% { opacity: 0.5; }
         }
 
         .status-text {
@@ -389,7 +400,7 @@
             color: var(--text-color);
         }
 
-        .vpn-tooltip {
+        .dns-tooltip {
             position: absolute;
             top: 100%;
             left: 0;
@@ -403,7 +414,14 @@
             z-index: 1000;
             border: 1px solid var(--border-color);
             min-width: 250px;
-            margin-top: 10px;
+            white-space: normal;
+            margin-top: 5px;
+        }
+        
+        .dns-details {
+            margin-top: 8px;
+            font-size: 12px;
+            color: var(--search-icon-color);
         }
         
         .pihole-stats {
@@ -424,6 +442,244 @@
         .status-link:hover {
             opacity: 1;
             text-decoration: underline;
+        }
+        
+        /* Plex Media Slider Styles */
+        .scroll-arrow {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background-color: var(--bg-color);
+            box-shadow: 0 2px 5px var(--search-box-shadow);
+            cursor: pointer;
+            z-index: 100;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+        
+        .scroll-arrow:hover {
+            transform: translateX(-50%) translateY(3px);
+            background-color: var(--hover-bg);
+        }
+        
+        .scroll-arrow svg {
+            width: 24px;
+            height: 24px;
+            fill: var(--search-icon-color);
+        }
+        
+        .plex-section {
+            display: none;
+            width: 100%;
+            padding: 30px 0;
+            background-color: var(--bg-color);
+            border-top: 1px solid var(--border-color);
+            margin-top: 50px;
+        }
+        
+        .plex-section.visible {
+            display: block;
+        }
+        
+        .plex-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .plex-title {
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 20px;
+            color: var(--text-color);
+        }
+        
+        .plex-slider {
+            display: flex;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            gap: 15px;
+            padding-bottom: 15px;
+            scrollbar-width: thin;
+            scrollbar-color: var(--border-color) transparent;
+        }
+        
+        .plex-slider::-webkit-scrollbar {
+            height: 6px;
+        }
+        
+        .plex-slider::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        
+        .plex-slider::-webkit-scrollbar-thumb {
+            background-color: var(--border-color);
+            border-radius: 6px;
+        }
+        
+        .media-item {
+            flex: 0 0 auto;
+            width: 180px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px var(--search-box-shadow);
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+        
+        .media-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .media-poster {
+            width: 100%;
+            aspect-ratio: 2/3;
+            object-fit: cover;
+        }
+        
+        .media-info {
+            padding: 10px;
+            background-color: var(--bg-color);
+        }
+        
+        .media-title {
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 5px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: var(--text-color);
+        }
+        
+        .media-year {
+            font-size: 12px;
+            color: var(--search-icon-color);
+        }
+        
+        @media (max-width: 768px) {
+            .media-item {
+                width: 140px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .media-item {
+                width: 120px;
+            }
+        }
+        
+        /* Loading indicator */
+        .loading-indicator {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 30px;
+            color: var(--search-icon-color);
+        }
+        
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            border-top-color: var(--search-icon-color);
+            animation: spin 1s ease-in-out infinite;
+            margin-bottom: 10px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Plex configuration form styles */
+        .plex-config-form {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: var(--bg-color);
+            border-radius: 8px;
+            box-shadow: 0 2px 10px var(--search-box-shadow);
+        }
+        
+        .plex-config-form h3 {
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 15px;
+            color: var(--text-color);
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+            color: var(--text-color);
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-size: 14px;
+        }
+        
+        .plex-config-button {
+            padding: 8px 16px;
+            background-color: #4285f4;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            margin-right: 10px;
+            margin-top: 10px;
+        }
+        
+        .plex-config-button:hover {
+            background-color: #3367d6;
+        }
+        
+        .plex-config-button.secondary {
+            background-color: var(--search-icon-color);
+        }
+        
+        .plex-config-button.secondary:hover {
+            background-color: var(--text-color);
+        }
+        
+        .config-note {
+            font-size: 12px;
+            color: var(--search-icon-color);
+            margin-top: 15px;
+        }
+        
+        .error-message {
+            text-align: center;
+            color: var(--text-color);
+        }
+        
+        .error-details {
+            font-size: 12px;
+            color: #d93025;
+            margin-bottom: 15px;
         }
         
         .stat-row {
@@ -460,10 +716,13 @@
 </head>
 <body>
     <div class="header">
-        <div class="vpn-status" id="vpn-status">
-            <div class="status-dot disconnected" id="status-dot"></div>
-            <span class="status-text" id="status-text">Disconnected</span>
-            <div class="vpn-tooltip" id="vpn-tooltip">Private VPN is disconnected</div>
+        <div class="dns-status" id="dns-status">
+            <div class="status-dot checking" id="status-dot"></div>
+            <span class="status-text" id="status-text">Checking...</span>
+            <div class="dns-tooltip" id="dns-tooltip">
+                <div>Checking DNS servers...</div>
+                <div class="dns-details" id="dns-details"></div>
+            </div>
         </div>
         <a href="https://gmail.com" class="nav-item" target="_blank" rel="noopener noreferrer" style="pointer-events: auto;">Gmail</a>
         
@@ -546,6 +805,27 @@
     
     <!-- Status link at bottom left -->
     <a href="https://status.tarunx.me" class="status-link" target="_blank" rel="noopener">Check Status</a>
+    
+    <!-- Scroll arrow for Plex media -->
+    <div class="scroll-arrow" id="scroll-arrow">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
+        </svg>
+    </div>
+    
+    <!-- Plex Media Section -->
+    <section class="plex-section" id="plex-section">
+        <div class="plex-container">
+            <h2 class="plex-title">Recently Added on Plex</h2>
+            <div class="plex-slider" id="plex-slider">
+                <!-- Media items will be loaded here -->
+                <div class="loading-indicator" id="plex-loading">
+                    <div class="spinner"></div>
+                    <p>Loading media...</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
  <script>
     // Toggle Apps menu
@@ -830,24 +1110,310 @@
         }
     });
     
-    // Close VPN tooltip when clicking outside
+    // Close DNS tooltip when clicking outside
     document.addEventListener('click', function(event) {
-        const tooltip = document.getElementById('vpn-tooltip');
-        const vpnStatus = document.getElementById('vpn-status');
+        const tooltip = document.getElementById('dns-tooltip');
+        const dnsStatus = document.getElementById('dns-status');
         
-        // If tooltip is visible and click is outside of tooltip and VPN status
+        // If tooltip is visible and click is outside of tooltip and DNS status
         if (tooltip.style.display === 'block' && 
             !tooltip.contains(event.target) && 
-            !vpnStatus.contains(event.target)) {
+            !dnsStatus.contains(event.target)) {
             tooltip.style.display = 'none';
         }
     });
+    
+    // DNS Leak Check using MaxMind
+    const dnsStatus = document.getElementById('dns-status');
+    const statusDot = document.getElementById('status-dot');
+    const statusText = document.getElementById('status-text');
+    const dnsTooltip = document.getElementById('dns-tooltip');
+    const dnsDetails = document.getElementById('dns-details');
+    
+    // Add click handler for DNS status
+    dnsStatus.addEventListener('click', function(event) {
+        // Prevent the click from propagating to document
+        event.stopPropagation();
+        
+        // Toggle tooltip visibility
+        if (dnsTooltip.style.display === 'block') {
+            dnsTooltip.style.display = 'none';
+        } else {
+            dnsTooltip.style.display = 'block';
+            // Force a recheck when opening the tooltip
+            checkDNSLeak();
+        }
+    });
+    
+    // Function to check DNS leak using MaxMind
+    async function checkDNSLeak() {
+        try {
+            // Set status to checking
+            statusDot.className = 'status-dot checking';
+            statusText.textContent = 'Checking...';
+            dnsDetails.innerHTML = 'Fetching DNS server information...';
+            
+            // Use a free GeoIP API since MaxMind requires authentication
+            const response = await fetch('https://ipapi.co/json/', {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+            
+            if (!response.ok) {
+                throw new Error(`Failed to fetch DNS info: ${response.status}`);
+            }
+            
+            const data = await response.json();
+            console.log('DNS check data:', data);
+            
+            // Check if DNS servers are in Mumbai (indicating VPN connection)
+            const isSecure = data.city === 'Mumbai' || data.region === 'Maharashtra';
+            
+            // Update status based on DNS check
+            if (isSecure) {
+                statusDot.className = 'status-dot secure';
+                statusText.textContent = 'Connected';
+                dnsDetails.innerHTML = `
+                    <div><strong>VPN Connected</strong></div>
+                    <div>Your DNS servers are properly configured.</div>
+                    <div>Location: ${data.city || 'Unknown'}, ${data.country_name || 'Unknown'}</div>
+                    <div>ISP: ${data.org || 'Unknown'}</div>
+                `;
+            } else {
+                statusDot.className = 'status-dot leaking';
+                statusText.textContent = 'Disconnected';
+                dnsDetails.innerHTML = `
+                    <div><strong>VPN Disconnected</strong></div>
+                    <div>DNS leak detected!</div>
+                    <div>Location: ${data.city || 'Unknown'}, ${data.country_name || 'Unknown'}</div>
+                    <div>ISP: ${data.org || 'Unknown'}</div>
+                    <div>Your DNS queries may be visible to your ISP.</div>
+                `;
+            }
+        } catch (error) {
+            console.error('DNS Leak Check Error:', error);
+            statusDot.className = 'status-dot leaking';
+            statusText.textContent = 'Disconnected';
+            dnsDetails.innerHTML = `<div><strong>Error checking VPN status</strong></div><div>${error.message}</div>`;
+        }
+    }
+    
+    // Check DNS leak on page load
+    checkDNSLeak();
+    
+    // Recheck periodically (every 5 minutes)
+    setInterval(checkDNSLeak, 5 * 60 * 1000);
 
     // Voice Search Functionality
     const voiceIcon = document.querySelector('.voice-icon');
     let isListening = false;
     let recognition = null;
 
+    // Plex Media Functionality
+    let plexMediaLoaded = false;
+    const scrollArrow = document.getElementById('scroll-arrow');
+    const plexSection = document.getElementById('plex-section');
+    
+    // Function to handle scroll arrow click
+    scrollArrow.addEventListener('click', () => {
+        // Show Plex section if it's hidden
+        if (!plexSection.classList.contains('visible')) {
+            plexSection.classList.add('visible');
+            // Scroll to Plex section
+            plexSection.scrollIntoView({ behavior: 'smooth' });
+            // Load Plex media if not already loaded
+            if (!plexMediaLoaded) {
+                loadPlexMedia();
+            }
+        } else {
+            // If already visible, just scroll to it
+            plexSection.scrollIntoView({ behavior: 'smooth' });
+        }
+    });
+    
+    // Function to check if element is in viewport
+    function isInViewport(element) {
+        const rect = element.getBoundingClientRect();
+        return (
+            rect.top <= (window.innerHeight || document.documentElement.clientHeight) &&
+            rect.bottom >= 0
+        );
+    }
+    
+    // Listen for scroll events to lazy load Plex media
+    window.addEventListener('scroll', () => {
+        if (!plexMediaLoaded && isInViewport(plexSection)) {
+            plexSection.classList.add('visible');
+            loadPlexMedia();
+        }
+    });
+    
+    // Function to load Plex media
+    async function loadPlexMedia() {
+        if (plexMediaLoaded) return;
+        plexMediaLoaded = true;
+        
+        const plexSlider = document.getElementById('plex-slider');
+        const loadingIndicator = document.getElementById('plex-loading');
+        
+        try {
+            // Define Plex configuration directly
+            const plexConfig = {
+                serverUrl: 'http://103.89.55.129:26025',
+                apiKey: 'gV-cUfzAoqFmZjLU6ytF'
+            };
+            
+            // Fetch Plex media
+            const response = await fetch(`${plexConfig.serverUrl}/library/recentlyAdded?X-Plex-Token=${plexConfig.apiKey}`, {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+            
+            if (!response.ok) {
+                throw new Error(`Failed to fetch from Plex: ${response.status}`);
+            }
+            
+            const data = await response.json();
+            
+            // Remove loading indicator
+            if (loadingIndicator) {
+                loadingIndicator.remove();
+            }
+            
+            // Process and display media items
+            if (data && data.MediaContainer && data.MediaContainer.Metadata) {
+                const mediaItems = data.MediaContainer.Metadata.slice(0, PLEX_CONFIG.maxItems);
+                
+                mediaItems.forEach(item => {
+                    const mediaType = item.type; // 'movie' or 'episode'
+                    const title = mediaType === 'movie' ? item.title : `${item.grandparentTitle} - ${item.title}`;
+                    const year = item.year || '';
+                    
+                    // Get poster URL from Plex
+                    const posterUrl = item.thumb ? `${plexConfig.serverUrl}${item.thumb}?X-Plex-Token=${plexConfig.apiKey}` : '';
+                    
+                    // Create media item element
+                    const mediaItem = document.createElement('div');
+                    mediaItem.className = 'media-item';
+                    
+                    // Create poster image
+                    const poster = document.createElement('img');
+                    poster.className = 'media-poster';
+                    poster.src = posterUrl || 'https://via.placeholder.com/180x270/eeeeee/999999?text=No+Poster';
+                    poster.alt = title;
+                    poster.loading = 'lazy'; // Use native lazy loading
+                    
+                    // Create info section
+                    const infoDiv = document.createElement('div');
+                    infoDiv.className = 'media-info';
+                    
+                    // Create title element
+                    const titleElement = document.createElement('div');
+                    titleElement.className = 'media-title';
+                    titleElement.textContent = title;
+                    
+                    // Create year element if available
+                    const yearElement = document.createElement('div');
+                    yearElement.className = 'media-year';
+                    yearElement.textContent = year;
+                    
+                    // Assemble the media item
+                    infoDiv.appendChild(titleElement);
+                    if (year) infoDiv.appendChild(yearElement);
+                    mediaItem.appendChild(poster);
+                    mediaItem.appendChild(infoDiv);
+                    
+                    // Add click handler to open in Plex
+                    mediaItem.addEventListener('click', () => {
+                        if (item.key) {
+                            const plexUrl = `${plexConfig.serverUrl}/web/index.html#!/server/*/details?key=${item.key}&X-Plex-Token=${plexConfig.apiKey}`;
+                            window.open(plexUrl, '_blank');
+                        } else {
+                            window.open(`${plexConfig.serverUrl}/web/index.html?X-Plex-Token=${plexConfig.apiKey}`, '_blank');
+                        }
+                    });
+                    
+                    // Add to slider
+                    plexSlider.appendChild(mediaItem);
+                });
+                
+                // If no items were found
+                if (mediaItems.length === 0) {
+                    const noItems = document.createElement('div');
+                    noItems.className = 'no-items';
+                    noItems.textContent = 'No recently added items found';
+                    plexSlider.appendChild(noItems);
+                }
+            } else {
+                throw new Error('Invalid response from Plex server');
+            }
+        } catch (error) {
+            handlePlexError(error, plexSlider, loadingIndicator);
+        }
+    }
+    
+    // Function to handle Plex media loading errors
+    function handlePlexError(error, plexSlider, loadingIndicator) {
+        console.error('Error loading Plex media:', error);
+        
+        // Show error message
+        if (loadingIndicator) {
+            loadingIndicator.innerHTML = `
+                <div class="error-message">
+                    <p>Failed to load Plex media</p>
+                    <p class="error-details">${error.message}</p>
+                </div>
+            `;
+        }
+        
+        // Create a fallback with sample data
+        const fallbackData = [
+            { title: 'Sample Movie 1', year: '2023', type: 'movie' },
+            { title: 'Sample Movie 2', year: '2023', type: 'movie' },
+            { title: 'Sample TV Show - Episode 1', year: '2023', type: 'episode' },
+            { title: 'Sample Movie 3', year: '2022', type: 'movie' },
+            { title: 'Sample TV Show - Episode 2', year: '2023', type: 'episode' }
+        ];
+        
+        // Remove loading indicator if it exists
+        if (loadingIndicator) {
+            loadingIndicator.remove();
+        }
+        
+        // Add fallback items
+        fallbackData.forEach(item => {
+            const mediaItem = document.createElement('div');
+            mediaItem.className = 'media-item';
+            
+            const poster = document.createElement('img');
+            poster.className = 'media-poster';
+            poster.src = 'https://via.placeholder.com/180x270/eeeeee/999999?text=Sample';
+            poster.alt = item.title;
+            
+            const infoDiv = document.createElement('div');
+            infoDiv.className = 'media-info';
+            
+            const titleElement = document.createElement('div');
+            titleElement.className = 'media-title';
+            titleElement.textContent = item.title;
+            
+            const yearElement = document.createElement('div');
+            yearElement.className = 'media-year';
+            yearElement.textContent = item.year;
+            
+            infoDiv.appendChild(titleElement);
+            infoDiv.appendChild(yearElement);
+            mediaItem.appendChild(poster);
+            mediaItem.appendChild(infoDiv);
+            
+            plexSlider.appendChild(mediaItem);
+        });
+    }
+    
     // Initialize speech recognition
     function initSpeechRecognition() {
         if ('webkitSpeechRecognition' in window) {
