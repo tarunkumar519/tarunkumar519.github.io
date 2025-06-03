@@ -13,6 +13,8 @@ html {
   box-sizing: border-box;
 }
 
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
 body {
   margin: 0;
   font-family: "Work Sans", sans-serif;
@@ -308,6 +310,65 @@ body {
     font-weight: lighter;
   }
 }
+
+/* Zomato Gift Card Styles */
+.gift-card {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: -2;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.zomato-card {
+  background-color: #cb202d; /* Zomato's red color */
+  color: white;
+  width: 350px;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  font-family: 'Roboto', sans-serif;
+  text-align: center;
+}
+
+.zomato-logo {
+  margin-bottom: 15px;
+}
+
+.zomato-logo img {
+  width: 150px;
+  height: auto;
+}
+
+.zomato-card h3 {
+  font-size: 24px;
+  margin: 10px 0 20px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.card-details {
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 15px;
+  border-radius: 8px;
+  margin-top: 20px;
+  text-align: left;
+}
+
+.card-details p {
+  margin: 10px 0;
+  font-size: 16px;
+}
+
+.card-details strong {
+  font-weight: 500;
+}
 </style>
 </head>
 
@@ -423,6 +484,19 @@ body {
       <p data-node-name="outroText">Okay, now come back and tell me if you liked it.</p>
       <p id="replay" data-node-name="replayText">Or click, if you want to watch it again.</p>
       <p class="last-smile" data-node-name="outroSmiley">:)</p>
+    </div>
+    <div class="gift-card">
+      <div class="zomato-card">
+        <div class="zomato-logo">
+          <img src="https://b.zmtcdn.com/images/logo/zomato_logo_2017.png" alt="Zomato Logo">
+        </div>
+        <h3>Gift Card</h3>
+        <div class="card-details">
+          <p><strong>Voucher Number:</strong> ZOM-1234-5678-9012</p>
+          <p><strong>PIN Code:</strong> 3456</p>
+          <p><strong>Valid Until:</strong> December 31, 2025</p>
+        </div>
+      </div>
     </div>
   </div>
 </body>
@@ -715,12 +789,14 @@ const animationTimeline = () => {
     })
     .staggerFrom(".nine p", 1, ideaTextTrans, 1.2)
     .to(
-      ".last-smile",
-      0.5,
+      ".gift-card",
+      0.7,
       {
-        rotation: 90
+        opacity: 1,
+        visibility: "visible",
+        zIndex: 10
       },
-      "+=1"
+      "+=0.5"
     );
 
   // tl.seek("currentStep");
