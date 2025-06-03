@@ -735,6 +735,10 @@ const animationTimeline = () => {
       rotation: -180,
       opacity: 0
     })
+    .to(".hat", 0.4, {
+      y: -15,
+      rotation: 0
+    }, "+=0.1")
     .staggerFrom(
       ".wish-hbd span",
       0.7,
